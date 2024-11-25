@@ -52,7 +52,7 @@ const Home = () => {
       </div>
 
       <div className="header">
-        <h1><b>THE ARENA</b></h1>
+        <h1><b>FEATURED</b></h1>
       </div>
 
       <div className="game-area">
@@ -73,15 +73,13 @@ const Home = () => {
         <div className="game-cards">
           <div className="game-card">
             <div className="content">
-                  <h2>Play the Ultimate JavaScript Snake Game!</h2>
-                  
+                  <h2>Play the Ultimate Snake Game!</h2>
                   <h3>Features:</h3>
                   <p>
-                    Classic gameplay with smooth javascript implementation
+                    Classic gameplay with smooth implementation
                     <br />
                     Dynamic difficulty and customizable themes.
                   </p>
-                  
                   <h3>How to play:</h3>
                   <p>
                     Use the arrow keys to move the snake.
@@ -90,7 +88,6 @@ const Home = () => {
                     <br /> 
                     Collect food to grow longer.
                   </p>
-                  
                   <h3>Get Started:</h3>
                   <div className="twobutton">
                     <Link to="/games">

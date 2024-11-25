@@ -4,13 +4,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { LotterProvider } from './context/LotterContext';
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
+  <LotterProvider>
   <React.StrictMode>
     <App />
   </React.StrictMode>
+  </LotterProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
