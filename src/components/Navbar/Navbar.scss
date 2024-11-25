@@ -1,0 +1,32 @@
+.navbar{
+    width: 100vw;
+    height: 8vh;
+    top: 0;
+    left: 0;
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(8px);
+    padding: 12px 10.5px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, .03);
+    z-index: 3;
+    border-bottom: 0.1px solid rgb(242, 74, 59);
+    nav{
+        margin: 0 5%;
+        width: 30%;
+        max-width: 40%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    nav a{
+        text-decoration: none;
+    }
+    .navlogo{
+        .logo {
+            width: 50px;
+            height: 50px;
+        }
+    }
+}

@@ -1,0 +1,19 @@
+.hexagons {
+    position: absolute;
+    top: 0;
+    left: -50px;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    .hexa {
+      position: absolute;
+      width: 82px;
+      height: 87px;
+      background-color: #181a27;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      transition: box-shadow 0.3s;
+    }
+    .hexa:hover {
+      box-shadow: 0 0 40px rgba(0, 0, 225, 0.9);
+    }
+}
