@@ -1,3 +1,4 @@
+import React, {useContext} from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Home.scss';
