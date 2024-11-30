@@ -14,7 +14,6 @@ root.render(
   <LotterProvider>
   <React.StrictMode>
     <App />
-    <Arena/>
   </React.StrictMode>
   </LotterProvider>
 );

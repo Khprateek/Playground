@@ -1,4 +1,4 @@
-import abi from './Lotter.json';
+import abi from './Lottery.json';
 
-export const contractABI = abi.abi;
-export const contractAddress = '0x40268B8e5741E94222696A5119dCDC44B3dE9e19';
+export const contractAbi = abi.abi;
+export const contractAddress = '0xD49bFBd72246B653d3CE20D46E98AC500F732a30';

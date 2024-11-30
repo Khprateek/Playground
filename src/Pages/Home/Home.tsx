@@ -1,10 +1,10 @@
 import React, {useContext} from 'react';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import './Home.scss';
 import HexBackground from '../../components/HexBackground/HexBackground';
 
-const Home = () => {
+const Home: React.FC = () => {
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       const glow = document.querySelector('.glow');
@@ -66,7 +66,7 @@ const Home = () => {
             <p>You are born for something different</p>
             <p>Choose from the rest be different</p>
             <div className="line"></div>
-            <Link to="/games">
+            <Link to="/Arena">
               <button className="btn2">Play Now</button>
             </Link>
           </div>
@@ -91,10 +91,10 @@ const Home = () => {
                   </p>
                   <h3>Get Started:</h3>
                   <div className="twobutton">
-                    <Link to="/games">
+                    <Link to="/Arena">
                       <button className="btn2">Play Now</button>
                     </Link>
-                    <Link to="/games">
+                    <Link to="/Arena">
                       <button className="btn2">See code</button>
                     </Link>
                   </div>

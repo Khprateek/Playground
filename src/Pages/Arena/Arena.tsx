@@ -1,7 +1,7 @@
 import './Arena.scss';
 import React, {useContext} from 'react';
-import Navbar from "../../components/Navbar/Navbar"
-const Arena = () => {
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+const Arena: React.FC = () => {
 
     const scrollLeft = () => {
           // Logic to scroll left
@@ -18,7 +18,9 @@ const Arena = () => {
                   <div className="redcard">
                       <div className="card-details">
                         <img src="./assets/Images/snake.png" alt="" height={150} width={100} />
-                        <p className="text-body">Lottery</p>
+                          <p className="heading">LOTTERY</p>
+                          <p>Uiverse</p>
+                          <Link to="/LotteryPage">LotteryPage</Link>
                       </div>
                   </div>
             </div>
