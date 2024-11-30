@@ -1,0 +1,47 @@
+// AdminControls.scss
+.admin-controls-container {
+    color: white;
+    text-align: center;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(16, 185, 129, 0.2); // emerald-300/20
+  }
+  
+  .admin-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .commission-info {
+    margin-bottom: 20px;
+  }
+  
+  .admin-buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  
+    @media (min-width: 768px) {
+      flex-direction: row;
+      gap: 8px;
+    }
+  }
+  
+  .admin-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    background-color: rgba(16, 185, 129, 0.1); // emerald-300/10
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: rgba(16, 185, 129, 0.2);
+    }
+  }

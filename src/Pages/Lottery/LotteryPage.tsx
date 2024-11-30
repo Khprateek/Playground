@@ -3,7 +3,9 @@ import { ethers } from "ethers";
 import { contractAddress, contractAbi } from "../../utils/constants";
 import './LotteryPage.scss'
 import Marquee from "react-fast-marquee";
-// import AdminControls from "./AdminControls";
+import CountDown from "./CountDown";
+import BuyButton from "./BuyButton";
+import AdminControls from "./AdminControls";
 
 
 const LotteryPage: React.FC = () => {
@@ -22,6 +24,7 @@ const LotteryPage: React.FC = () => {
   const [lastWinner, setLastWinner] = useState<string>("");
   const [lastWinnerAmount, setLastWinnerAmount] = useState<string>("0");
   const [lotteryOperator, setLotteryOperator] = useState<string>("");
+
     useEffect(() => {
         const loadBlockchainData = async () => {
             if (!(window as any).ethereum) {
@@ -55,7 +58,7 @@ const LotteryPage: React.FC = () => {
                         commissionData,
                         lastWinnerData,
                         lastWinnerAmountData,
-                        lotteryOperatorData
+                        dealerAddress
                     ] = await Promise.all([
                         deployedContract.RemainingTickets(),
                         deployedContract.CurrentWinningReward(),
@@ -66,18 +69,28 @@ const LotteryPage: React.FC = () => {
                         deployedContract.lastWinnerAmount(),
                         deployedContract.Dealer()
                     ]);
-                    const sanitizeValue = (value: any) => {
-                      return value ? value.toString().replace(/\.0+$/, '') : '0';
+
+                    const safeFormatEther = (value: any) => {
+                      try {
+                          if (value && !value.isZero()) {
+                              return ethers.utils.formatEther(value);
+                          }
+                          return "0";
+                      } catch (error) {
+                          console.error("Error formatting ether:", error);
+                          return "0";
+                      }
                     };
-                    setRemainingTickets(sanitizeValue(remainingTicketsData).toNumber());
-                    setCurrentWinning(ethers.utils.formatEther(sanitizeValue(currentWinningData)));
-                    setTicketPrice(ethers.utils.formatEther(sanitizeValue(ticketPriceData)));
-                    setTotalCommission(ethers.utils.formatEther(sanitizeValue(commissionData)));
-                    setWinnings(sanitizeValue(winningsData).toNumber());
+
+                    setRemainingTickets(Number(remainingTicketsData.toString()));
+                    setCurrentWinning(safeFormatEther(currentWinningData));
+                    setTicketPrice(safeFormatEther(ticketPriceData));
+                    setTotalCommission(safeFormatEther(commissionData));
+                    setWinnings(Number(winningsData.toString()));
                     setLastWinner(lastWinnerData);
-                    setLastWinnerAmount(ethers.utils.formatEther(sanitizeValue(lastWinnerAmountData)));
-                    setLotteryOperator(lotteryOperatorData);
-                    // alert("data Fetched Successfull");
+                    setLastWinnerAmount(safeFormatEther(lastWinnerAmountData));
+                    setLotteryOperator(dealerAddress);
+
                     } catch (error) {
                         console.error("Error fetching contract data:", error);
                     }
@@ -94,7 +107,6 @@ const LotteryPage: React.FC = () => {
       
           loadBlockchainData();
 
-
           // Cleanup listener
         return () => {
           if ((window as any).ethereum) {
@@ -103,10 +115,12 @@ const LotteryPage: React.FC = () => {
       };
 
     }, []);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       e.preventDefault();
       setAmount(e.target.valueAsNumber);
     };
+
     const handleWithdrawWinnings = async () => {
       if (!contract) return;
 
@@ -119,10 +133,9 @@ const LotteryPage: React.FC = () => {
           // Handle error (e.g., show error toast)
       }
     };
+
     return (
       <div className="wholelotteryPage">
-
-        {/* <Header /> */}
         <Marquee 
           className="lottery-marquee" 
           speed={100} 
@@ -133,19 +146,16 @@ const LotteryPage: React.FC = () => {
               Last Winner: {lastWinner?.toString()}
             </h4>
             <h4>
-              Previous Winnings:
-              {lastWinnerAmount &&
-                ethers.utils.formatEther(lastWinnerAmount?.toString())}{" "}
-              Ethers
+              Previous Winnings: {lastWinnerAmount} Ethers
             </h4>
           </div>
         </Marquee>
         
-        {/* {lotteryOperator === address && (
+        {lotteryOperator === account && (
           <div className="admin-controls">
-          <AdminControls />
+            <AdminControls />
           </div>
-          )} */}
+        )}
         
         {winnings > 0 && (
           <div className="winnings-container">
@@ -164,11 +174,7 @@ const LotteryPage: React.FC = () => {
             <div className="stats-summary">
               <div className="stats">
                 <h2>total pool</h2>
-                <p>
-                  {currentWinning &&
-                    ethers.utils.formatEther(currentWinning.toString())}{" "}
-                  MATIC
-                </p>
+                <p>{currentWinning} Ethers</p>
               </div>
               <div className="stats">
                 <h2>Tickets Remaining</h2>
@@ -176,7 +182,7 @@ const LotteryPage: React.FC = () => {
               </div>
             </div>
             <div className="countdown-container">
-              {/* <CountDown /> */}
+              <CountDown />
             </div>
           </div>
           
@@ -184,11 +190,7 @@ const LotteryPage: React.FC = () => {
             <div className="ticket-details">
               <div className="ticket-price-header">
                 <h2>Price per ticket</h2>
-                <p>
-                  {ticketPrice &&
-                    ethers.utils.formatEther(ticketPrice.toString())}{" "}
-                  Ethers
-                </p>
+                <p>{ticketPrice} Ethers</p>
               </div>
               
               <div className="ticket-input">
@@ -205,20 +207,11 @@ const LotteryPage: React.FC = () => {
               <div className="ticket-cost-details">
                 <div className="cost-item">
                   <p>Total Costs of Ticket</p>
-                  <p>
-                    {ticketPrice &&
-                      Number(ethers.utils.formatEther(ticketPrice.toString())) *
-                      amount}{" "}
-                    Ethers
-                  </p>
+                  <p>{Number(ticketPrice) * amount} Ethers</p>
                 </div>
                 <div className="cost-item">
                   <p>Service Fees</p>
-                  <p>
-                    {totalCommission &&
-                      ethers.utils.formatEther(totalCommission.toString())}{" "}
-                    Ethers
-                  </p>
+                  <p>{totalCommission} Ethers</p>
                 </div>
                 <div className="cost-item">
                   <p>+ Network Fees</p>
@@ -226,7 +219,7 @@ const LotteryPage: React.FC = () => {
                 </div>
               </div>
               
-              {/* <BuyButton amount={amount} /> */}
+              <BuyButton amount={amount} />
             </div>
             
             {userTickets > 0 && (
@@ -248,9 +241,7 @@ const LotteryPage: React.FC = () => {
             )}
           </div>
         </div>
-        
-        {/* <Footer /> */}
-            </div>
+      </div>
     );
 }
 
