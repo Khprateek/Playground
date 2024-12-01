@@ -61,31 +61,26 @@ function BuyButton({ amount }: BuyButtonProps) {
     loadContractData();
   }, []);
 
-  const handleBuyTickets = async () => {
+  const handleBuyTicket = async () => {
     if (!contract || !provider) return;
 
     const notify = toast.loading("Buying your tickets...");
     try {
-      // Calculate total price
-      const totalPrice = (Number(ticketPrice) * amount).toString();
-
-      // Call contract method to buy tickets
-      const tx = await contract.BuyTickets({
+      const totalPrice = (Number(ticketPrice)).toString();
+      const tx = await contract.BuyTicket({
         value: ethers.utils.parseEther(totalPrice)
       });
 
       // Wait for transaction to be mined
       await tx.wait();
 
-      toast.success(`${amount} ticket${amount > 1 ? 's' : ''} successfully purchased`, { id: notify });
+      toast.success(`ticket successfully purchased`, { id: notify });
       console.log("Payment successful", tx);
     } catch (error) {
       toast.error("Whoops something went wrong!!!", { id: notify });
       console.error("Contract call failure", error);
     }
   };
-
-  // Check if button should be disabled
   const isDisabled = 
     (expiration && expiration < Math.floor(Date.now() / 1000)) || 
     remainingTickets === 0 || 
@@ -99,10 +94,10 @@ function BuyButton({ amount }: BuyButtonProps) {
     <div className="buy-button-container">
       <button 
         className={`buy-btn ${isDisabled ? 'disabled' : ''}`}
-        onClick={handleBuyTickets}
+        onClick={handleBuyTicket}
         disabled={isDisabled}
       >
-        {`Buy ${amount} ticket${amount > 1 ? 's' : ''} for ${(Number(ticketPrice) * amount).toFixed(2)} Ethers`}
+        {`BUY`}
       </button>
     </div>
   );

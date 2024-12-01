@@ -45,8 +45,6 @@ const LotteryPage: React.FC = () => {
               setContract(deployedContract);
               setProvider(web3provider);
               setAccount(accounts[0]);
-
-               // Fetch contract data
                const fetchContractData = async () => {
                 try {
                     // Example of fetching data similar to thirdweb useContractRead
@@ -55,7 +53,6 @@ const LotteryPage: React.FC = () => {
                         currentWinningData,
                         winningsData,
                         ticketPriceData,
-                        commissionData,
                         lastWinnerData,
                         lastWinnerAmountData,
                         dealerAddress
@@ -64,7 +61,6 @@ const LotteryPage: React.FC = () => {
                         deployedContract.CurrentWinningReward(),
                         deployedContract.getWinningsForAddress(accounts[0]),
                         deployedContract.ticketPrice(),
-                        deployedContract.ticketCommission(),
                         deployedContract.lastWinner(),
                         deployedContract.lastWinnerAmount(),
                         deployedContract.Dealer()
@@ -85,7 +81,6 @@ const LotteryPage: React.FC = () => {
                     setRemainingTickets(Number(remainingTicketsData.toString()));
                     setCurrentWinning(safeFormatEther(currentWinningData));
                     setTicketPrice(safeFormatEther(ticketPriceData));
-                    setTotalCommission(safeFormatEther(commissionData));
                     setWinnings(Number(winningsData.toString()));
                     setLastWinner(lastWinnerData);
                     setLastWinnerAmount(safeFormatEther(lastWinnerAmountData));
@@ -115,11 +110,6 @@ const LotteryPage: React.FC = () => {
       };
 
     }, []);
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      e.preventDefault();
-      setAmount(e.target.valueAsNumber);
-    };
 
     const handleWithdrawWinnings = async () => {
       if (!contract) return;
@@ -189,26 +179,11 @@ const LotteryPage: React.FC = () => {
           <div className="ticket-container">
             <div className="ticket-details">
               <div className="ticket-price-header">
-                <h2>Price per ticket</h2>
+                <h2>Price of a ticket</h2>
                 <p>{ticketPrice} Ethers</p>
               </div>
               
-              <div className="ticket-input">
-                <p>TICKETS</p>
-                <input
-                  type="number"
-                  min={1}
-                  max={10}
-                  value={amount}
-                  onChange={handleChange}
-                  />
-              </div>
-              
               <div className="ticket-cost-details">
-                <div className="cost-item">
-                  <p>Total Costs of Ticket</p>
-                  <p>{Number(ticketPrice) * amount} Ethers</p>
-                </div>
                 <div className="cost-item">
                   <p>Service Fees</p>
                   <p>{totalCommission} Ethers</p>

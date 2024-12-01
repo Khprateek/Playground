@@ -37,9 +37,9 @@ function AdminControls() {
         const dealer = await deployedContract.Dealer();
         const currentAccount = accounts[0];
         setIsAdmin(dealer.toLowerCase() === currentAccount.toLowerCase());
-console.log(dealer.toLowerCase(), currentAccount.toLowerCase())
+        console.log(dealer.toLowerCase(), currentAccount.toLowerCase())
         // Fetch total commission
-        const commissionData = await deployedContract.operatorTotalCommission();
+        const commissionData = await deployedContract.DealerTotalCommission();
         setTotalCommission(ethers.utils.formatEther(commissionData));
         setIsLoading(false);
       } catch (error) {
@@ -87,12 +87,6 @@ console.log(dealer.toLowerCase(), currentAccount.toLowerCase())
     "Draw has been restarted!"
   );
 
-  const handleReFundAll = () => handleContractAction(
-    "RefundAll", 
-    "Refunding the wallet...", 
-    "Wallet has been refunded!"
-  );
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -127,13 +121,6 @@ console.log(dealer.toLowerCase(), currentAccount.toLowerCase())
           onClick={handleRestart}
         >
           🔄 Restart Draw
-        </button>
-
-        <button 
-          className="admin-btn" 
-          onClick={handleReFundAll}
-        >
-          ↩️ Refund All
         </button>
       </div>
     </div>
