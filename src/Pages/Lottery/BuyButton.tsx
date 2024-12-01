@@ -97,6 +97,7 @@ function BuyButton({ amount }: BuyButtonProps) {
         onClick={handleBuyTicket}
         disabled={isDisabled}
       >
+        
         {`BUY`}
       </button>
     </div>

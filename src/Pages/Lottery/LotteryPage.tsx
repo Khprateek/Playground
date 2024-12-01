@@ -153,7 +153,7 @@ const LotteryPage: React.FC = () => {
               onClick={handleWithdrawWinnings}
               className="win-btn"
               >
-              Winner!!! Winner!!! Click here to withdraw
+              Winner!!! Click here to withdraw
             </button>
           </div>
         )}
@@ -179,11 +179,14 @@ const LotteryPage: React.FC = () => {
           <div className="ticket-container">
             <div className="ticket-details">
               <div className="ticket-price-header">
-                <h2>Price of a ticket</h2>
-                <p>{ticketPrice} Ethers</p>
+                <h2>Get your ticket</h2>
               </div>
               
               <div className="ticket-cost-details">
+                <div className="cost-item">
+                  <p>Costs of Ticket</p>
+                  <p>{Number(ticketPrice)} Ethers</p>
+                </div>
                 <div className="cost-item">
                   <p>Service Fees</p>
                   <p>{totalCommission} Ethers</p>
